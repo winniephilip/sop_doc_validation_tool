@@ -137,6 +137,9 @@ pip install -r requirements.txt
 # Set Python path and start the server
 $env:PYTHONPATH = (Get-Location).Path
 uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+# If you get block on windows. run below command instead
+#python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 Open `http://localhost:8000` in your browser once the server is running.
