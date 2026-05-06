@@ -62,6 +62,7 @@ function hideResults() {
     ["ss-img-file",    "ss-img-name",  "ss-preview-wrap", "ss-preview"],
     ["html-doc-file",  "html-doc-name",null,              null],
     ["html-html-file", "html-html-name",null,             null],
+    ["batch-csv-file", "batch-csv-name",null,             null],
   ];
   inputs.forEach(function(row) {
     var inp = document.getElementById(row[0]);
@@ -215,6 +216,68 @@ window.handleHtmlCompare = async function() {
     if (btn) btn.disabled = false;
   }
 };
+
+window.handleBatchCompare = async function() {
+  var csvFile = document.getElementById("batch-csv-file");
+  var btn     = document.getElementById("batch-compare-btn");
+  var bar     = document.getElementById("batch-status-bar");
+  var results = document.getElementById("batch-results-container");
+
+  if (!csvFile || !csvFile.files[0]) { setStatus(bar, "Please select a CSV file.", true); return; }
+
+  setStatus(bar, "Running batch comparison…");
+  if (btn) btn.disabled = true;
+  if (results) results.innerHTML = "";
+
+  var fd = new FormData();
+  fd.append("csv_file", csvFile.files[0]);
+
+  try {
+    var data = await postForm(API + "/batch-compare-html", fd);
+    setStatus(bar, "Batch complete — " + data.length + " row(s) processed.");
+    if (results) results.innerHTML = renderBatchResults(data);
+  } catch(e) {
+    setStatus(bar, "Error: " + e.message, true);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+};
+
+function renderBatchResults(rows) {
+  if (!rows || !rows.length) return "<p style='color:#718096;margin-top:12px'>No rows processed.</p>";
+
+  var statusColours = {
+    MATCH:    "chip-MATCH",
+    MISMATCH: "chip-MISMATCH",
+    MISSING:  "chip-MISSING",
+    ADDED:    "chip-ADDED",
+    ERROR:    "chip-MISMATCH",
+  };
+
+  var rowsHtml = rows.map(function(r) {
+    var badge = '<span class="count-chip ' + (statusColours[r.status] || "chip-MISMATCH") + '">' + esc(r.status) + '</span>';
+    var pct   = r.score != null ? Math.round(r.score * 100) + "%" : "—";
+    var jsonOut  = r.json_output  ? '<span class="batch-path">' + esc(r.json_output)  + '</span>' : '—';
+    var htmlOut  = r.html_output  ? '<span class="batch-path">' + esc(r.html_output)  + '</span>' : '—';
+    var errCell  = r.error        ? '<span style="color:#742a2a;font-size:.8rem">' + esc(r.error) + '</span>' : '';
+    return "<tr>" +
+      "<td>" + esc(r.file || ("Row " + r.row)) + "</td>" +
+      "<td>" + badge + "</td>" +
+      "<td style='text-align:center'>" + pct + "</td>" +
+      "<td>" + jsonOut + "</td>" +
+      "<td>" + htmlOut + "</td>" +
+      "<td>" + errCell + "</td>" +
+      "</tr>";
+  }).join("");
+
+  return '<table class="diff-table batch-table" style="margin-top:16px">' +
+    '<thead><tr>' +
+    '<th>File</th><th>Status</th><th>Score</th>' +
+    '<th>JSON Output</th><th>HTML Output</th><th>Error</th>' +
+    '</tr></thead>' +
+    '<tbody>' + rowsHtml + '</tbody>' +
+    '</table>';
+}
 
 // ── Shared fetch helper ───────────────────────────────────────────────────────
 async function postForm(endpoint, formData) {

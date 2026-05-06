@@ -1,6 +1,6 @@
 # SOP Ingestion Validation Tool
 
-A local web application that parses Standard Operating Procedure (SOP) documents and compares them field-by-field and section-by-section against other documents, webpages, screenshots, or downloaded HTML files.
+A local web application that parses Standard Operating Procedure (SOP) documents and compares them field-by-field and section-by-section against other documents, webpages, screenshots, downloaded HTML files, or in bulk via a CSV-driven batch mode.
 
 ---
 
@@ -33,8 +33,9 @@ When an SOP document is converted into a web page or another format, this tool v
 └────────────────────────┬─────────────────────────────────┘
                          │ HTTP (multipart/form-data)
 ┌────────────────────────▼─────────────────────────────────┐
-│              FastAPI Application (api/main.py)            │
-│   /compare  /compare-web  /compare-html  /compare-screenshot │
+│              FastAPI Application (api/main.py)                    │
+│  /compare  /compare-web  /compare-html  /compare-screenshot      │
+│  /batch-compare-html                                              │
 └──────┬─────────────────┬────────────────┬────────────────┘
        │                 │                │
 ┌──────▼──────┐  ┌───────▼──────┐  ┌─────▼──────────────┐
@@ -66,6 +67,7 @@ When an SOP document is converted into a web page or another format, this tool v
 | **Doc vs Webpage** | Upload a DOCX/PDF and provide a URL; the page is scraped and compared |
 | **Doc vs Screenshot** | Upload a DOCX/PDF and a screenshot image; OCR extracts text from the image |
 | **Doc vs HTML File** | Upload a DOCX/PDF and either upload a downloaded `.html` file or paste a local file path |
+| **Batch Doc vs HTML** | Upload a CSV file to compare multiple DOCX/HTML pairs in one run; results saved to `batch_output\` |
 
 ---
 
@@ -74,11 +76,12 @@ When an SOP document is converted into a web page or another format, this tool v
 ```
 SOP_Ingestion_validation_tool/
 ├── api/
-│   └── main.py              # FastAPI routes — /compare, /compare-web, /compare-html, /compare-screenshot
+│   └── main.py              # FastAPI routes — /compare, /compare-web, /compare-html, /compare-screenshot, /batch-compare-html
 ├── comparator/
 │   ├── diff_engine.py       # Field + section comparison, similarity scoring, diff generation
 │   ├── web_scraper.py       # Fetches a URL or parses HTML; extracts sections from CREW Blazor pages
-│   └── image_ocr.py         # Tesseract OCR wrapper; converts an image to the SOP JSON schema
+│   ├── image_ocr.py         # Tesseract OCR wrapper; converts an image to the SOP JSON schema
+│   └── report_html.py       # Generates self-contained HTML comparison reports for batch output
 ├── parser/
 │   ├── base_parser.py       # Abstract base: shared regex patterns, parse() method
 │   ├── docx_parser.py       # python-docx parser; reads paragraphs and tables in document order
@@ -87,10 +90,12 @@ SOP_Ingestion_validation_tool/
 │   └── sop_schema.json      # JSON schema for the common SOP document structure
 ├── web/
 │   ├── index.html           # Single-page UI
-│   ├── app.js               # Client-side logic for all four comparison modes
-│   └── styles.css           # Styling
+│   ├── app.js               # Client-side logic for all five comparison modes
+│   ├── styles.css           # Styling
+│   └── williams_logo.png    # Williams logo displayed in the application header
 ├── uploads/                 # Temporary upload storage (auto-deleted after each request)
-├── reports/                 # Persisted comparison reports (JSON, one file per run)
+├── reports/                 # Persisted single-comparison reports (JSON, one file per run)
+├── batch_output/            # Batch comparison output — one .json and one .html per DOCX file
 ├── requirements.txt
 └── start.bat                # One-click launcher for Windows
 ```
@@ -154,8 +159,24 @@ Open `http://localhost:8000` in your browser once the server is running.
 4. Review the results:
    - **Summary banner** — overall match score and status counts
    - **Field Comparison tab** — row-by-row comparison of metadata fields (title, version, author, etc.)
-   - **Section Comparison tab** — side-by-side section content with inline diffs for mismatches
+   - **Section Comparison tab** — side-by-side section content with inline word-level diff highlights
    - **Raw JSON tab** — full parsed JSON for both documents
+
+### Batch Doc vs HTML
+
+1. Select the **Batch Doc vs HTML** tab.
+2. Prepare a CSV file — no header row, two columns per row:
+
+   ```
+   C:\Docs\Procedure1.docx,C:\HTML\Procedure1.html
+   C:\Docs\SafetyGuide.docx,C:\HTML\SafetyGuide.html
+   ```
+
+3. Upload the CSV and click **Run Batch Compare**.
+4. The tool processes every row and displays a results table showing the status, match score, and output file paths for each pair.
+5. Output files are saved to `batch_output\` in the project root:
+   - `<docx-stem>.json` — full comparison report
+   - `<docx-stem>.html` — self-contained, styled HTML report with inline diff highlights that can be opened directly in a browser
 
 ### Supported File Types
 
@@ -197,4 +218,6 @@ The **Diff Engine** (`comparator/diff_engine.py`) runs in three passes:
    - **Pass 2 (content fallback):** Sections with no title match are paired by content similarity (threshold 0.40). This handles cases where the DOCX uses a generic title like `"Table"` and the HTML uses a meaningful title like `"Forms"` for the same content.
    - **Pass 3:** Any remaining unmatched sections are reported as MISSING (present in original only) or ADDED (present in new version only).
 
-3. **Scoring** — the overall match score is `MATCH count ÷ total items`. Reports are persisted as JSON under `reports/`.
+3. **Scoring** — the overall match score is `MATCH count ÷ total items`. Single-mode reports are persisted as JSON under `reports/`; batch reports are saved to `batch_output/`.
+
+**Batch processing** (`POST /batch-compare-html`) reads a CSV row by row. Each row is processed independently — a failure on one row (missing file, parse error) is recorded in the results table without stopping the remaining rows. Output filenames are derived from the DOCX file stem, so `MyProcedure.docx` produces `batch_output\MyProcedure.json` and `batch_output\MyProcedure.html`.

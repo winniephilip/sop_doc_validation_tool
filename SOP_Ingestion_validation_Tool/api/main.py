@@ -1,6 +1,8 @@
 """FastAPI application for the SOP Ingestion Validation Tool."""
 from __future__ import annotations
 
+import csv
+import io
 import json
 import shutil
 import uuid
@@ -20,8 +22,11 @@ REPORTS_DIR = ROOT / "reports"
 WEB_DIR = ROOT / "web"
 SCHEMA_PATH = ROOT / "schemas" / "sop_schema.json"
 
+BATCH_OUTPUT_DIR = ROOT / "batch_output"
+
 UPLOADS_DIR.mkdir(exist_ok=True)
 REPORTS_DIR.mkdir(exist_ok=True)
+BATCH_OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Lazy imports so the app starts even if libs are missing
 def _get_parser():
@@ -317,6 +322,88 @@ async def compare_doc_vs_web(
         raise HTTPException(500, f"Comparison failed: {exc}") from exc
     finally:
         doc_path.unlink(missing_ok=True)
+
+
+@app.post("/batch-compare-html")
+async def batch_compare_html(
+    csv_file: UploadFile = File(...),
+) -> list[dict[str, Any]]:
+    """Accept a CSV (docx_path, html_path) and compare each pair, saving JSON + HTML reports."""
+    raw = await csv_file.read()
+    text = raw.decode("utf-8-sig", errors="replace")   # utf-8-sig strips Excel BOM
+    reader = csv.reader(io.StringIO(text))
+
+    parse_file = _get_parser()
+    engine     = _get_engine()
+    results: list[dict[str, Any]] = []
+
+    for row_num, row in enumerate(reader, start=1):
+        # Skip blank / header rows
+        if not row or not any(cell.strip() for cell in row):
+            continue
+        if len(row) < 2:
+            results.append({"row": row_num, "file": "", "status": "ERROR",
+                             "score": None, "json_output": None, "html_output": None,
+                             "error": "Row must have 2 columns (docx_path, html_path)"})
+            continue
+
+        docx_str = row[0].strip()
+        html_str = row[1].strip()
+        docx_stem = Path(docx_str).stem
+
+        try:
+            docx_path = Path(docx_str)
+            html_path = Path(html_str)
+            if not docx_path.exists():
+                raise FileNotFoundError(f"DOCX not found: {docx_str}")
+            if not html_path.exists():
+                raise FileNotFoundError(f"HTML not found: {html_str}")
+
+            doc_parsed  = parse_file(docx_path)
+            raw_html    = html_path.read_text(encoding="utf-8", errors="replace")
+            html_parsed = _parse_html(raw_html, str(html_path))
+
+            report      = engine.compare(doc_parsed, html_parsed)
+            report_dict = _report_to_dict(report)
+            report_dict["compare_mode"]    = "batch_doc_vs_html"
+            report_dict["original_parsed"] = doc_parsed
+            report_dict["new_parsed"]      = html_parsed
+
+            json_out = BATCH_OUTPUT_DIR / f"{docx_stem}.json"
+            json_out.write_text(
+                json.dumps(report_dict, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+
+            from comparator.report_html import render_html_report
+            html_out = BATCH_OUTPUT_DIR / f"{docx_stem}.html"
+            html_out.write_text(render_html_report(report_dict, docx_stem), encoding="utf-8")
+
+            results.append({
+                "row":         row_num,
+                "file":        docx_stem,
+                "docx":        docx_str,
+                "html":        html_str,
+                "status":      report_dict["overall_status"],
+                "score":       report_dict["score"],
+                "json_output": str(json_out),
+                "html_output": str(html_out),
+                "error":       None,
+            })
+
+        except Exception as exc:
+            results.append({
+                "row":         row_num,
+                "file":        docx_stem,
+                "docx":        docx_str,
+                "html":        html_str,
+                "status":      "ERROR",
+                "score":       None,
+                "json_output": None,
+                "html_output": None,
+                "error":       str(exc),
+            })
+
+    return results
 
 
 # ── serialisation helper ──────────────────────────────────────────────────────

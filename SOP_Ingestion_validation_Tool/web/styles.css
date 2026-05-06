@@ -406,6 +406,35 @@ body {
   word-break: break-word;
 }
 
+/* ── Batch mode ──────────────────────────────────────────────────────────── */
+.batch-csv-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #2a4365;
+  margin-bottom: 18px;
+}
+.batch-csv-icon { font-size: 1.2rem; flex-shrink: 0; }
+.batch-csv-hint code {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: #2c5282;
+  font-family: monospace;
+}
+.batch-table { margin-top: 16px; }
+.batch-path {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #4a5568;
+  word-break: break-all;
+}
+
 /* ── Inline diff highlights ───────────────────────────────────────────────── */
 .hl-del {
   background: #fed7d7;

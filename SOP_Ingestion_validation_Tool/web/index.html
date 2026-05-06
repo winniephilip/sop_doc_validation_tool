@@ -37,6 +37,9 @@
     <button class="mode-btn" data-mode="doc-vs-html">
       <span class="mode-icon">&#128196;</span> Doc vs HTML File
     </button>
+    <button class="mode-btn" data-mode="batch-doc-vs-html">
+      <span class="mode-icon">&#128203;</span> Batch Doc vs HTML
+    </button>
   </nav>
 
   <main class="container">
@@ -157,6 +160,37 @@
       <div class="status-bar" id="html-status-bar"></div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         MODE: Batch Doc vs HTML
+    ══════════════════════════════════════════════════ -->
+    <section class="card upload-panel mode-panel" id="panel-batch-doc-vs-html">
+      <h2>Batch Compare: Doc vs HTML File</h2>
+      <p class="panel-desc">
+        Upload a CSV file with two columns: <strong>Column 1</strong> = full path to the
+        <code>.docx</code> file, <strong>Column 2</strong> = full path to the
+        <code>.html</code> file. Each row is compared and results are saved to
+        <code>batch_output\</code> as a <code>.json</code> and <code>.html</code> report
+        named after the DOCX file.
+      </p>
+      <div class="batch-csv-hint">
+        <span class="batch-csv-icon">&#128196;</span>
+        <span>CSV format example:<br/>
+          <code>C:\Docs\MyProcedure.docx,C:\HTML\MyProcedure.html</code><br/>
+          <code>C:\Docs\SafetyGuide.docx,C:\HTML\SafetyGuide.html</code>
+        </span>
+      </div>
+      <div class="upload-row">
+        <div class="upload-box" style="max-width:380px">
+          <label for="batch-csv-file">CSV File</label>
+          <input type="file" id="batch-csv-file" accept=".csv" />
+          <div class="file-name" id="batch-csv-name">No file selected</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="batch-compare-btn" onclick="handleBatchCompare()">Run Batch Compare</button>
+      <div class="status-bar" id="batch-status-bar"></div>
+      <div id="batch-results-container"></div>
+    </section>
+
     <!-- ── Summary Banner (shared) ── -->
     <section class="card summary-banner hidden" id="summary-banner">
       <div class="summary-score">
@@ -212,6 +246,6 @@
 
   </main>
 
-  <script src="/static/app.js?v=7"></script>
+  <script src="/static/app.js?v=8"></script>
 </body>
 </html>
