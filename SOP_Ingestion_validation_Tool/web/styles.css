@@ -60,15 +60,26 @@ body {
   gap: 6px;
 }
 .mode-btn:hover { color: #e2e8f0; }
-.mode-btn.active { color: #fff; border-bottom-color: #e94560; }
+.mode-btn.active { color: #fff; border-bottom-color: #005fab; }
 .mode-icon { font-size: 1rem; }
 
 /* ── Header ──────────────────────────────────────────────────────────────── */
 .app-header {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: #fff;
-  padding: 24px 32px;
-  border-bottom: 3px solid #e94560;
+  padding: 16px 32px;
+  border-bottom: 3px solid #005fab;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header-logo {
+  height: 52px;
+  width: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.4));
 }
 .app-header h1 { font-size: 1.6rem; font-weight: 700; }
 .subtitle { font-size: 0.85rem; color: #a0aec0; margin-top: 4px; }
@@ -110,7 +121,7 @@ body {
   text-align: center;
   transition: border-color 0.2s;
 }
-.upload-box:hover { border-color: #667eea; }
+.upload-box:hover { border-color: #005fab; }
 .upload-box label { display: block; font-weight: 600; margin-bottom: 10px; color: #4a5568; }
 .upload-box input[type="file"] { width: 100%; cursor: pointer; }
 .file-name { margin-top: 8px; font-size: 0.8rem; color: #718096; }
@@ -118,7 +129,7 @@ body {
 .arrow-icon { font-size: 2rem; color: #a0aec0; flex-shrink: 0; }
 
 .btn-primary {
-  background: #667eea;
+  background: #005fab;
   color: #fff;
   border: none;
   padding: 11px 28px;
@@ -128,7 +139,7 @@ body {
   cursor: pointer;
   transition: background 0.2s, opacity 0.2s;
 }
-.btn-primary:hover:not(:disabled) { background: #5a67d8; }
+.btn-primary:hover:not(:disabled) { background: #004a8f; }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .status-bar {
@@ -215,7 +226,7 @@ body {
 }
 .path-row input[type="text"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #005fab;
   box-shadow: 0 0 0 3px rgba(102,126,234,.15);
 }
 
@@ -278,7 +289,7 @@ body {
 }
 .url-box input[type="url"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #005fab;
   box-shadow: 0 0 0 3px rgba(102,126,234,.15);
 }
 
@@ -300,7 +311,7 @@ body {
   color: #4a5568;
   transition: background 0.15s;
 }
-.tab.active { background: #fff; color: #667eea; box-shadow: 0 -2px 0 #667eea inset; }
+.tab.active { background: #fff; color: #005fab; box-shadow: 0 -2px 0 #005fab inset; }
 .tab:hover:not(.active) { background: #cbd5e0; }
 
 /* ── Diff Table ───────────────────────────────────────────────────────────── */
