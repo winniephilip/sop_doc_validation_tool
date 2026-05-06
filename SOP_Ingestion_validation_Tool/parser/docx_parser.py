@@ -15,8 +15,11 @@ _HEADING_STYLES = {"Heading 1", "Heading 2", "Heading 3", "Heading 4"}
 _BOLD_HEADING_RE = re.compile(r"^(\d+(?:\.\d+)*\.?)\s+(.+)$")
 
 # XML tag names used to distinguish paragraphs from tables in body order
-_TAG_PARA  = qn("w:p")
-_TAG_TABLE = qn("w:tbl")
+_TAG_PARA        = qn("w:p")
+_TAG_TABLE       = qn("w:tbl")
+_TAG_SDT         = qn("w:sdt")          # structured document tag (content control)
+_TAG_SDT_CONTENT = qn("w:sdtContent")
+_TAG_RUN_TEXT    = qn("w:t")
 
 
 def _table_to_text(table: Any) -> str:
@@ -37,12 +40,19 @@ def _table_to_text(table: Any) -> str:
     return "\n".join(lines)
 
 
+def _sdt_text(sdt_elem: Any) -> str:
+    """Extract plain text from a w:sdt content-control element."""
+    for child in sdt_elem:
+        if child.tag == _TAG_SDT_CONTENT:
+            return "".join(el.text or "" for el in child.iter(_TAG_RUN_TEXT)).strip()
+    return ""
+
+
 def _iter_body_blocks(doc: Document):
     """
     Yield (kind, obj) in document order from the body XML.
-    kind is 'para' or 'table'; obj is the matching python-docx object.
+    kind is 'para', 'table', or 'text' (raw string from a content control).
     """
-    # Build fast lookup maps from XML element → python-docx object
     para_map  = {p._element: p for p in doc.paragraphs}
     table_map = {t._element: t for t in doc.tables}
 
@@ -52,6 +62,12 @@ def _iter_body_blocks(doc: Document):
             yield "para", para_map[child]
         elif tag == _TAG_TABLE and child in table_map:
             yield "table", table_map[child]
+        elif tag == _TAG_SDT:
+            # Paragraphs inside content controls are not in doc.paragraphs;
+            # extract raw text so nothing is silently dropped.
+            text = _sdt_text(child)
+            if text:
+                yield "text", text
 
 
 class DocxParser(BaseParser):
@@ -88,10 +104,12 @@ class DocxParser(BaseParser):
                 text = obj.text.strip()
                 if text:
                     parts.append(text)
-            else:  # table
+            elif kind == "table":
                 table_text = _table_to_text(obj)
                 if table_text:
                     parts.append(table_text)
+            else:  # text — raw string from a content control
+                parts.append(obj)
         return "\n".join(parts)
 
     # ── sections ──────────────────────────────────────────────────────────────
@@ -126,6 +144,10 @@ class DocxParser(BaseParser):
                 elif current is not None:
                     current["content"] += text + "\n"
 
+            elif kind == "text":  # raw text from a content control
+                if obj and current is not None:
+                    current["content"] += obj + "\n"
+
             else:  # table — append its text to the current section
                 table_text = _table_to_text(obj)
                 if not table_text:
@@ -157,9 +179,13 @@ class DocxParser(BaseParser):
 
     @staticmethod
     def _is_bold_heading(para: Any) -> bool:
-        """Return True if all non-empty runs in the paragraph are bold."""
+        """Return True if all non-empty runs are bold and the text is short enough to be a heading."""
         runs = [r for r in para.runs if r.text.strip()]
-        return bool(runs) and all(r.bold for r in runs)
+        if not runs or not all(r.bold for r in runs):
+            return False
+        # Long bold sentences are content, not headings (e.g. "Annually, not to exceed 15 months:")
+        text = "".join(r.text for r in runs).strip()
+        return len(text.split()) <= 8
 
     @staticmethod
     def _fallback_sections(raw: str) -> list[dict[str, Any]]:
