@@ -395,6 +395,21 @@ body {
   word-break: break-word;
 }
 
+/* ── Inline diff highlights ───────────────────────────────────────────────── */
+.hl-del {
+  background: #fed7d7;
+  color: #742a2a;
+  text-decoration: line-through;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+.hl-add {
+  background: #c6f6d5;
+  color: #22543d;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 700px) {
   .section-split, .raw-split { grid-template-columns: 1fr; }

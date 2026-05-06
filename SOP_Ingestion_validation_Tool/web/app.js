@@ -318,6 +318,46 @@ function renderFieldTable(fields, warningsResult) {
   }).join("");
 }
 
+// ── Word-level inline diff ────────────────────────────────────────────────────
+function tokenize(text) {
+  // Split into word+punctuation tokens and whitespace tokens
+  return text.split(/(\s+)/).filter(function(t) { return t.length > 0; });
+}
+
+function wordLCS(a, b) {
+  // O(mn) LCS — capped at 300 tokens per side for performance
+  var m = a.length, n = b.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) { dp[i] = new Array(n + 1).fill(0); }
+  for (var i = 1; i <= m; i++)
+    for (var j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] + 1 : Math.max(dp[i-1][j], dp[i][j-1]);
+  var ops = [], i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && a[i-1] === b[j-1]) { ops.push({ t: '=', v: a[i-1] }); i--; j--; }
+    else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) { ops.push({ t: '+', v: b[j-1] }); j--; }
+    else { ops.push({ t: '-', v: a[i-1] }); i--; }
+  }
+  return ops.reverse();
+}
+
+function inlineDiff(origText, newText) {
+  var tokA = tokenize(origText || "");
+  var tokB = tokenize(newText  || "");
+  // Fall back to plain text for very large sections
+  if (tokA.length > 1000 || tokB.length > 1000) {
+    return { origHtml: esc(origText), newHtml: esc(newText) };
+  }
+  var ops = wordLCS(tokA, tokB);
+  var origHtml = "", newHtml = "";
+  ops.forEach(function(op) {
+    if (op.t === '=') { origHtml += esc(op.v); newHtml += esc(op.v); }
+    else if (op.t === '-') { origHtml += '<span class="hl-del">' + esc(op.v) + '</span>'; }
+    else                   { newHtml  += '<span class="hl-add">' + esc(op.v) + '</span>'; }
+  });
+  return { origHtml: origHtml, newHtml: newHtml };
+}
+
 function renderSections(sections, mode) {
   var div = document.getElementById("sections-container");
   if (!div) return;
@@ -328,17 +368,24 @@ function renderSections(sections, mode) {
                : mode === "doc-vs-html"       ? "HTML File"
                : "New Version";
   div.innerHTML = sections.map(function(s) {
-    var hasDiff  = s.diff_lines && s.diff_lines.length > 0;
-    var sim      = s.similarity != null ? simBar(s.similarity) : "";
+    var sim = s.similarity != null ? simBar(s.similarity) : "";
+    var origHtml, newHtml;
+    if ((s.status === "MISMATCH" || (s.status === "MATCH" && s.similarity != null && s.similarity < 1.0)) && s.original_content && s.new_content) {
+      var d = inlineDiff(s.original_content, s.new_content);
+      origHtml = d.origHtml;
+      newHtml  = d.newHtml;
+    } else {
+      origHtml = esc(s.original_content || "(not present)");
+      newHtml  = esc(s.new_content      || "(not present)");
+    }
     return '<div class="section-card">' +
       '<div class="section-header" onclick="toggleSection(this)">' +
         '<span class="status-badge status-' + s.status + '">' + s.status + '</span>' +
         '<span class="section-title">' + esc(s.title) + '</span>' + sim +
         '<span>&#9660;</span></div>' +
       '<div class="section-body"><div class="section-split">' +
-        '<div class="section-col"><h4>' + leftLbl  + '</h4><p>' + esc(s.original_content || "(not present)") + '</p></div>' +
-        '<div class="section-col"><h4>' + rightLbl + '</h4><p>' + esc(s.new_content      || "(not present)") + '</p></div>' +
-      '</div>' + (hasDiff ? '<div class="diff-block">' + renderDiff(s.diff_lines) + '</div>' : '') +
+        '<div class="section-col"><h4>' + leftLbl  + '</h4><p>' + origHtml + '</p></div>' +
+        '<div class="section-col"><h4>' + rightLbl + '</h4><p>' + newHtml  + '</p></div>' +
       '</div></div>';
   }).join("");
 }
