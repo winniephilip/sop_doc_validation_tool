@@ -1,0 +1,216 @@
+{
+  "original_file": "fa6d31f9caf2423caba8aa42e71386ad.docx",
+  "new_file": "https://crew-dev.williams.com/intake/view/Barnett/Draft/01-06-00-01-01g-crew-preliminary-review-site-specific-procedures",
+  "overall_status": "MISMATCH",
+  "score": 0.5714,
+  "field_results": [
+    {
+      "field": "title",
+      "status": "MISMATCH",
+      "original_value": "REVIEW Site-Specific Procedures",
+      "new_value": "CREW",
+      "similarity": 0.17142857142857143,
+      "diff_lines": [
+        "--- ",
+        "+++ ",
+        "@@ -1 +1 @@",
+        "-REVIEW Site-Specific Procedures",
+        "+CREW"
+      ]
+    },
+    {
+      "field": "version",
+      "status": "MISSING",
+      "original_value": "00",
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "revision_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "effective_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "department",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "author",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "approver",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "purpose",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "scope",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    }
+  ],
+  "section_results": [
+    {
+      "section_id": "tbl1",
+      "title": "Table",
+      "status": "MISSING",
+      "original_content": "REVIEW Site-Specific Procedures\n01.06.00.01-01 | Revision 00 | Effective Date\nAssociated Words\nForms | F01-101 – Review and Certification of SSOPs, SSMPs, and Emergency Plans",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "s2",
+      "title": "Site-Specific Procedure Reviews",
+      "status": "MISSING",
+      "original_content": "Task: JP01060001-01 | OQ: N/A\nSupervisor, Operations:\n | IDENTIFY the SSOPs and SSMPs to review.\n | Use F01-101 to DOCUMENT: \nFacility, City, State\nType of review (check the appropriate boxes)\nProcedures to be reviewed\nNOTE: Use one form each year to document the procedure reviews, even if the reviews happen at various times throughout the year.\n | ASSIGN individuals to perform reviews of procedures.\nMake sure reviewers are familiar with the assets, equipment, and processes.\nReviewer:\n | During the review, VERIFY procedure content includes:\nAccurate steps and information, in the correct order\nCorrect Responsible Parties for each step/process\nRequired Qualifications (OQ, QE, etc.), if applicable\nLinks that open the appropriate document or location\nAll required sections of the appropriate template\n | REVISE procedures and forms, as necessary, per 01.06.00.01-03 – Create New, Revise Existing, or Archive Site-Specific Procedures.\nNOTE: Do not update the Revision History table unless changes are made to a procedure.\nSupervisor, Operations:\n | For each procedure reviewed, COMPLETE the F01-101:\nReviewed by\nDate\nRevisions Required?\nManager, Operations:\n | REVIEW and CERTIFY the F01-101:\nCertified by\nTitle\nDate\nNOTE: A physical signature is not required in the Certified By field.\n | UPLOAD the F01-101 to the Operations Repository.\nCompliance Requirements | 01.06.10.01 – GAS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.20.01 – LIQUIDS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.30.01 – PSM-RMP Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.40.01 – OFFSHORE Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.60.01 – LNG Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\nDefinitions | WIMS Glossary\nRecordkeeping | WIMS Forms Matrix",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "s3",
+      "title": "Applicability",
+      "status": "MISSING",
+      "original_content": "Franchise Applicability\nTransmission & GoM | Gathering & Processing\nGulf of Mexico | Laurel Mountain MS | Piceance | Anadarko/Mid-Continent\nEastern Interstates | ORSH Gathering | Southwest Wyoming | Barnett\nNorthwest Pipeline | ORSH Processing & Frac | Wamsutter | Eagle Ford\nMountainWest | SRSH Compression | Rocky Mountain MS | Haynesville\nLNG | SRSH Gathering | NGL Services | Permian\nUNGS | \nCorporate",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "crew",
+      "title": "CREW",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "The application is loading...",
+      "similarity": null,
+      "diff_lines": []
+    }
+  ],
+  "warnings_result": {
+    "field": "warnings",
+    "status": "MATCH",
+    "original_value": [],
+    "new_value": [],
+    "similarity": 1.0,
+    "diff_lines": []
+  },
+  "summary": {
+    "MATCH": 8,
+    "MISMATCH": 1,
+    "MISSING": 4,
+    "ADDED": 1
+  },
+  "report_id": "52620cf97c784892abab48eb305f07fe",
+  "compare_mode": "doc_vs_web",
+  "original_parsed": {
+    "document_id": "fa6d31f9caf2423caba8aa42e71386ad",
+    "title": "REVIEW Site-Specific Procedures",
+    "version": "00",
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": null,
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "tbl1",
+        "title": "Table",
+        "content": "REVIEW Site-Specific Procedures\n01.06.00.01-01 | Revision 00 | Effective Date\nAssociated Words\nForms | F01-101 – Review and Certification of SSOPs, SSMPs, and Emergency Plans",
+        "order": 1,
+        "subsections": []
+      },
+      {
+        "section_id": "s2",
+        "title": "Site-Specific Procedure Reviews",
+        "content": "Task: JP01060001-01 | OQ: N/A\nSupervisor, Operations:\n | IDENTIFY the SSOPs and SSMPs to review.\n | Use F01-101 to DOCUMENT: \nFacility, City, State\nType of review (check the appropriate boxes)\nProcedures to be reviewed\nNOTE: Use one form each year to document the procedure reviews, even if the reviews happen at various times throughout the year.\n | ASSIGN individuals to perform reviews of procedures.\nMake sure reviewers are familiar with the assets, equipment, and processes.\nReviewer:\n | During the review, VERIFY procedure content includes:\nAccurate steps and information, in the correct order\nCorrect Responsible Parties for each step/process\nRequired Qualifications (OQ, QE, etc.), if applicable\nLinks that open the appropriate document or location\nAll required sections of the appropriate template\n | REVISE procedures and forms, as necessary, per 01.06.00.01-03 – Create New, Revise Existing, or Archive Site-Specific Procedures.\nNOTE: Do not update the Revision History table unless changes are made to a procedure.\nSupervisor, Operations:\n | For each procedure reviewed, COMPLETE the F01-101:\nReviewed by\nDate\nRevisions Required?\nManager, Operations:\n | REVIEW and CERTIFY the F01-101:\nCertified by\nTitle\nDate\nNOTE: A physical signature is not required in the Certified By field.\n | UPLOAD the F01-101 to the Operations Repository.\nCompliance Requirements | 01.06.10.01 – GAS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.20.01 – LIQUIDS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.30.01 – PSM-RMP Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.40.01 – OFFSHORE Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.60.01 – LNG Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\nDefinitions | WIMS Glossary\nRecordkeeping | WIMS Forms Matrix",
+        "order": 2,
+        "subsections": []
+      },
+      {
+        "section_id": "s3",
+        "title": "Applicability",
+        "content": "Franchise Applicability\nTransmission & GoM | Gathering & Processing\nGulf of Mexico | Laurel Mountain MS | Piceance | Anadarko/Mid-Continent\nEastern Interstates | ORSH Gathering | Southwest Wyoming | Barnett\nNorthwest Pipeline | ORSH Processing & Frac | Wamsutter | Eagle Ford\nMountainWest | SRSH Compression | Rocky Mountain MS | Haynesville\nLNG | SRSH Gathering | NGL Services | Permian\nUNGS | \nCorporate",
+        "order": 3,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [],
+    "revisions": [],
+    "metadata": {
+      "source_file": "fa6d31f9caf2423caba8aa42e71386ad.docx",
+      "file_type": "docx",
+      "parsed_at": "2026-05-04T17:11:30.545822Z",
+      "page_count": null,
+      "word_count": 365
+    }
+  },
+  "new_parsed": {
+    "document_id": "https://crew-dev.williams.com/intake/view/Barnett/Draft/01-06-00-01-01g-crew-preliminary-review-site-specific-procedures",
+    "title": "CREW",
+    "version": null,
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": null,
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "crew",
+        "title": "CREW",
+        "content": "The application is loading...",
+        "order": 1,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [],
+    "revisions": [],
+    "metadata": {
+      "source_file": "https://crew-dev.williams.com/intake/view/Barnett/Draft/01-06-00-01-01g-crew-preliminary-review-site-specific-procedures",
+      "file_type": "webpage",
+      "parsed_at": "2026-05-04T17:11:35.496802Z",
+      "page_count": null,
+      "word_count": 4
+    }
+  }
+}

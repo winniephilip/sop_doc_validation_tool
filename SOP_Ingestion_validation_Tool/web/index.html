@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOP Ingestion Validation Tool</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <!-- ── Error Toast ── -->
+  <div id="error-toast" class="error-toast hidden">
+    <span id="error-toast-msg"></span>
+    <button onclick="document.getElementById('error-toast').classList.add('hidden')" class="toast-close">&#10005;</button>
+  </div>
+
+  <header class="app-header">
+    <h1>SOP Ingestion Validation Tool</h1>
+    <p class="subtitle">Compare and validate original vs. revised SOP documents</p>
+  </header>
+
+  <!-- ── Mode Navigation ── -->
+  <nav class="mode-nav">
+    <button class="mode-btn active" data-mode="doc-vs-doc">
+      <span class="mode-icon">&#128196;</span> Doc vs Doc
+    </button>
+    <button class="mode-btn" data-mode="doc-vs-web">
+      <span class="mode-icon">&#127760;</span> Doc vs Webpage
+    </button>
+    <button class="mode-btn" data-mode="doc-vs-screenshot">
+      <span class="mode-icon">&#128247;</span> Doc vs Screenshot
+    </button>
+    <button class="mode-btn" data-mode="doc-vs-html">
+      <span class="mode-icon">&#128196;</span> Doc vs HTML File
+    </button>
+  </nav>
+
+  <main class="container">
+
+    <!-- ══════════════════════════════════════════════════
+         MODE: Doc vs Doc
+    ══════════════════════════════════════════════════ -->
+    <section class="card upload-panel mode-panel active" id="panel-doc-vs-doc">
+      <h2>Compare Two Documents</h2>
+      <p class="panel-desc">Upload the original and the new version to compare field-by-field.</p>
+      <div class="upload-row">
+        <div class="upload-box">
+          <label for="orig-file">Original Document</label>
+          <input type="file" id="orig-file" accept=".pdf,.docx,.doc" />
+          <div class="file-name" id="orig-name">No file selected</div>
+        </div>
+        <div class="arrow-icon">&#8594;</div>
+        <div class="upload-box">
+          <label for="new-file">New Version</label>
+          <input type="file" id="new-file" accept=".pdf,.docx,.doc" />
+          <div class="file-name" id="new-name">No file selected</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="compare-btn" onclick="handleDocCompare()">Compare Documents</button>
+      <div class="status-bar" id="status-bar"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         MODE: Doc vs Webpage
+    ══════════════════════════════════════════════════ -->
+    <section class="card upload-panel mode-panel" id="panel-doc-vs-web">
+      <h2>Compare Document vs Webpage</h2>
+      <p class="panel-desc">Upload a DOCX/PDF and enter the URL of the converted webpage to validate they match.</p>
+      <div class="upload-row">
+        <div class="upload-box">
+          <label for="web-doc-file">Source Document</label>
+          <input type="file" id="web-doc-file" accept=".pdf,.docx,.doc" />
+          <div class="file-name" id="web-doc-name">No file selected</div>
+        </div>
+        <div class="arrow-icon">&#8596;</div>
+        <div class="upload-box url-box">
+          <label for="web-url">Webpage URL</label>
+          <input type="url" id="web-url" placeholder="https://your-site.com/sop-page" />
+          <div class="file-name" id="web-url-hint">Paste the URL of the rendered SOP page</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="web-compare-btn" onclick="handleWebCompare()">Compare Doc vs Webpage</button>
+      <div class="status-bar" id="web-status-bar"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         MODE: Doc vs Screenshot
+    ══════════════════════════════════════════════════ -->
+    <section class="card upload-panel mode-panel" id="panel-doc-vs-screenshot">
+      <h2>Compare Document vs Screenshot</h2>
+      <p class="panel-desc">Upload the original DOCX/PDF and a screenshot of the new content. OCR extracts text from the image for comparison.</p>
+      <div class="upload-row">
+        <div class="upload-box">
+          <label for="ss-doc-file">Original Document</label>
+          <input type="file" id="ss-doc-file" accept=".pdf,.docx,.doc" />
+          <div class="file-name" id="ss-doc-name">No file selected</div>
+        </div>
+        <div class="arrow-icon">&#8596;</div>
+        <div class="upload-box screenshot-box">
+          <label for="ss-img-file">Screenshot Image</label>
+          <input type="file" id="ss-img-file" accept=".png,.jpg,.jpeg,.webp,.bmp,.tiff,.tif" />
+          <div class="file-name" id="ss-img-name">PNG, JPG, WEBP, BMP, TIFF</div>
+          <div class="img-preview-wrap hidden" id="ss-preview-wrap">
+            <img id="ss-preview" src="" alt="Screenshot preview" class="img-preview" />
+          </div>
+        </div>
+      </div>
+      <div class="ocr-status-row" id="ocr-status-row">
+        <span id="ocr-status-indicator">&#9679; Checking Tesseract…</span>
+      </div>
+      <div class="ocr-notice">
+        <span class="ocr-icon">&#128270;</span>
+        <span>
+          Text is extracted using <strong>Tesseract OCR</strong> — must be installed separately on Windows.
+          <a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="noopener" class="ocr-link">
+            Download Tesseract &#8599;
+          </a>
+          &nbsp;|&nbsp; For best results use a high-resolution, unobstructed screenshot.
+        </span>
+      </div>
+      <button class="btn-primary" id="ss-compare-btn" onclick="handleSsCompare()">Compare Doc vs Screenshot</button>
+      <div class="status-bar" id="ss-status-bar"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         MODE: Doc vs HTML File
+    ══════════════════════════════════════════════════ -->
+    <section class="card upload-panel mode-panel" id="panel-doc-vs-html">
+      <h2>Compare Document vs HTML File</h2>
+      <p class="panel-desc">
+        Upload the original DOCX/PDF and either upload a downloaded HTML file <strong>or</strong>
+        paste the local file path (e.g. <code>C:\Winnie\page.html</code>).
+      </p>
+      <div class="upload-row">
+        <div class="upload-box">
+          <label for="html-doc-file">Original Document</label>
+          <input type="file" id="html-doc-file" accept=".pdf,.docx,.doc" />
+          <div class="file-name" id="html-doc-name">No file selected</div>
+        </div>
+        <div class="arrow-icon">&#8596;</div>
+        <div class="upload-box">
+          <label for="html-html-file">HTML File <span class="label-or">or paste path below</span></label>
+          <input type="file" id="html-html-file" accept=".html,.htm" />
+          <div class="file-name" id="html-html-name">No file selected</div>
+          <div class="path-row">
+            <label for="html-local-path" class="path-label">Local file path:</label>
+            <input type="text" id="html-local-path"
+                   placeholder="C:\Winnie\SOP_Asset_Bundle\public\images\logo\CREW.html" />
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary" id="html-compare-btn" onclick="handleHtmlCompare()">Compare Doc vs HTML File</button>
+      <div class="status-bar" id="html-status-bar"></div>
+    </section>
+
+    <!-- ── Summary Banner (shared) ── -->
+    <section class="card summary-banner hidden" id="summary-banner">
+      <div class="summary-score">
+        <span id="score-value">-</span>
+        <span class="score-label">Match Score</span>
+      </div>
+      <div class="summary-counts" id="summary-counts"></div>
+      <div class="overall-badge" id="overall-badge"></div>
+      <div class="compare-mode-label" id="compare-mode-label"></div>
+    </section>
+
+    <!-- ── Tabs (shared) ── -->
+    <div class="tab-bar hidden" id="tab-bar">
+      <button class="tab active" data-tab="fields">Field Comparison</button>
+      <button class="tab" data-tab="sections">Section Comparison</button>
+      <button class="tab" data-tab="raw">Raw JSON</button>
+    </div>
+
+    <!-- ── Field Comparison Table ── -->
+    <section class="card tab-content active" id="tab-fields">
+      <table class="diff-table" id="field-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Status</th>
+            <th>Document</th>
+            <th>Webpage / New Version</th>
+            <th>Similarity</th>
+          </tr>
+        </thead>
+        <tbody id="field-tbody"></tbody>
+      </table>
+    </section>
+
+    <!-- ── Section Comparison ── -->
+    <section class="card tab-content hidden" id="tab-sections">
+      <div id="sections-container"></div>
+    </section>
+
+    <!-- ── Raw JSON ── -->
+    <section class="card tab-content hidden" id="tab-raw">
+      <div class="raw-split">
+        <div>
+          <h3 id="raw-left-label">Original Parsed</h3>
+          <pre id="raw-orig"></pre>
+        </div>
+        <div>
+          <h3 id="raw-right-label">New Version / Webpage Parsed</h3>
+          <pre id="raw-new"></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/static/app.js?v=5"></script>
+</body>
+</html>

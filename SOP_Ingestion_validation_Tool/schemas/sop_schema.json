@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SOP Document Schema",
+  "type": "object",
+  "required": ["document_id", "title", "version", "sections"],
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Unique identifier for the SOP document"
+    },
+    "title": {
+      "type": "string",
+      "description": "Full title of the SOP"
+    },
+    "version": {
+      "type": "string",
+      "description": "Document version number (e.g. 1.0, 2.3)"
+    },
+    "revision_date": {
+      "type": ["string", "null"],
+      "description": "Date of last revision (ISO 8601)"
+    },
+    "effective_date": {
+      "type": ["string", "null"],
+      "description": "Effective date (ISO 8601)"
+    },
+    "department": {
+      "type": ["string", "null"],
+      "description": "Owning department"
+    },
+    "author": {
+      "type": ["string", "null"],
+      "description": "Document author"
+    },
+    "approver": {
+      "type": ["string", "null"],
+      "description": "Document approver"
+    },
+    "purpose": {
+      "type": ["string", "null"],
+      "description": "Purpose statement of the SOP"
+    },
+    "scope": {
+      "type": ["string", "null"],
+      "description": "Scope of applicability"
+    },
+    "sections": {
+      "type": "array",
+      "description": "Ordered list of document sections",
+      "items": {
+        "type": "object",
+        "required": ["section_id", "title", "content"],
+        "properties": {
+          "section_id": { "type": "string" },
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "order": { "type": "integer" },
+          "subsections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["section_id", "title", "content"],
+              "properties": {
+                "section_id": { "type": "string" },
+                "title": { "type": "string" },
+                "content": { "type": "string" },
+                "order": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Safety warnings extracted from the document",
+      "items": { "type": "string" }
+    },
+    "references": {
+      "type": "array",
+      "description": "Referenced documents or standards",
+      "items": { "type": "string" }
+    },
+    "revisions": {
+      "type": "array",
+      "description": "Revision history entries",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": { "type": "string" },
+          "date": { "type": "string" },
+          "description": { "type": "string" },
+          "author": { "type": "string" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Parser-generated metadata",
+      "properties": {
+        "source_file": { "type": "string" },
+        "file_type": { "type": "string", "enum": ["pdf", "docx", "txt"] },
+        "parsed_at": { "type": "string" },
+        "page_count": { "type": ["integer", "null"] },
+        "word_count": { "type": "integer" }
+      }
+    }
+  }
+}

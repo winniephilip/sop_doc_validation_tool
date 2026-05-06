@@ -1,0 +1,295 @@
+{
+  "original_file": "80dd4c9650994d9f88ea56b5f5f665b7.docx",
+  "new_file": "CREW_pssr.html",
+  "overall_status": "MISMATCH",
+  "score": 0.4444,
+  "field_results": [
+    {
+      "field": "title",
+      "status": "MISMATCH",
+      "original_value": "REVIEW Site-Specific Procedures",
+      "new_value": "Pre-Startup Safety Review (PSSR)",
+      "similarity": 0.31746031746031744,
+      "diff_lines": [
+        "--- ",
+        "+++ ",
+        "@@ -1 +1 @@",
+        "-REVIEW Site-Specific Procedures",
+        "+Pre-Startup Safety Review (PSSR)"
+      ]
+    },
+    {
+      "field": "version",
+      "status": "MATCH",
+      "original_value": "00",
+      "new_value": "00",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "field": "revision_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "effective_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "department",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "author",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "approver",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "purpose",
+      "status": "ADDED",
+      "original_value": null,
+      "new_value": "Establish the requirements for performing and documenting Pre-Startup Safety Reviews (PSSRs).\nA PSSR will confirm, at a minimum, that:\nConstruction and modifications are performed in accordance with design specifications and meet the requirements specified by the associated Management of Change (MOC), if applicable.\nRecommendations from a Process Hazard Analysis (PHA) or Hazard Screening Review (HSR) are resolved or implemented.\nEquipment and assets are inspected, tested, calibrated, etc., in accordance with design specifications.\nAffected employees are notified or trained.\nThe asset is ready for commissioning and startup.\nPost startup deliverables are identified and assigned.\nA PSSR is required:\nIn conjunction with every MOC.\nPrior to startup of any new asset.\nPrior to startup of an existing asset has been\nout of service\nfor any length of time.\nPrior to startup of an existing asset has been in\nstandby\nfor 12 or more months.\nBefore returning existing assets to service when removed from",
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "scope",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    }
+  ],
+  "section_results": [
+    {
+      "section_id": "tbl1",
+      "title": "Table",
+      "status": "MISSING",
+      "original_content": "REVIEW Site-Specific Procedures\n01.06.00.01-01 | Revision 00 | Effective Date\nAssociated Words\nForms | F01-101 – Review and Certification of SSOPs, SSMPs, and Emergency Plans",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "s2",
+      "title": "Site-Specific Procedure Reviews",
+      "status": "MISSING",
+      "original_content": "Task: JP01060001-01 | OQ: N/A\nSupervisor, Operations:\n | IDENTIFY the SSOPs and SSMPs to review.\n | Use F01-101 to DOCUMENT: \nFacility, City, State\nType of review (check the appropriate boxes)\nProcedures to be reviewed\nNOTE: Use one form each year to document the procedure reviews, even if the reviews happen at various times throughout the year.\n | ASSIGN individuals to perform reviews of procedures.\nMake sure reviewers are familiar with the assets, equipment, and processes.\nReviewer:\n | During the review, VERIFY procedure content includes:\nAccurate steps and information, in the correct order\nCorrect Responsible Parties for each step/process\nRequired Qualifications (OQ, QE, etc.), if applicable\nLinks that open the appropriate document or location\nAll required sections of the appropriate template\n | REVISE procedures and forms, as necessary, per 01.06.00.01-03 – Create New, Revise Existing, or Archive Site-Specific Procedures.\nNOTE: Do not update the Revision History table unless changes are made to a procedure.\nSupervisor, Operations:\n | For each procedure reviewed, COMPLETE the F01-101:\nReviewed by\nDate\nRevisions Required?\nManager, Operations:\n | REVIEW and CERTIFY the F01-101:\nCertified by\nTitle\nDate\nNOTE: A physical signature is not required in the Certified By field.\n | UPLOAD the F01-101 to the Operations Repository.\nCompliance Requirements | 01.06.10.01 – GAS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.20.01 – LIQUIDS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.30.01 – PSM-RMP Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.40.01 – OFFSHORE Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.60.01 – LNG Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\nDefinitions | WIMS Glossary\nRecordkeeping | WIMS Forms Matrix",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "s3",
+      "title": "Applicability",
+      "status": "MISSING",
+      "original_content": "Franchise Applicability\nTransmission & GoM | Gathering & Processing\nGulf of Mexico | Laurel Mountain MS | Piceance | Anadarko/Mid-Continent\nEastern Interstates | ORSH Gathering | Southwest Wyoming | Barnett\nNorthwest Pipeline | ORSH Processing & Frac | Wamsutter | Eagle Ford\nMountainWest | SRSH Compression | Rocky Mountain MS | Haynesville\nLNG | SRSH Gathering | NGL Services | Permian\nUNGS | \nCorporate",
+      "new_content": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "purpose",
+      "title": "Purpose",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "Establish the requirements for performing and documenting Pre-Startup Safety Reviews (PSSRs).\nA PSSR will confirm, at a minimum, that:\nConstruction and modifications are performed in accordance with design specifications and meet the requirements specified by the associated Management of Change (MOC), if applicable.\nRecommendations from a Process Hazard Analysis (PHA) or Hazard Screening Review (HSR) are resolved or implemented.\nEquipment and assets are inspected, tested, calibrated, etc., in accordance with design specifications.\nAffected employees are notified or trained.\nThe asset is ready for commissioning and startup.\nPost startup deliverables are identified and assigned.\nA PSSR is required:\nIn conjunction with every MOC.\nPrior to startup of any new asset.\nPrior to startup of an existing asset has been\nout of service\nfor any length of time.\nPrior to startup of an existing asset has been in\nstandby\nfor 12 or more months.\nBefore returning existing assets to service when removed from service for:\nNon-routine repairs\nSignificant maintenance\nOtherwise disassembled (e.g., cavern workover, compressor overhaul, equipment, piping, vessels etc. which were opened or disassembled for inspection etc.)\nA PSSR may be required even if an MOC is not.\nFor additional guidance on effectively executing the PSSR process for large-scale projects or for phased startup of complex projects or jobs, see\nMOC Guidance\n.\nApplies to\n: All Company Facilities",
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "key-activities",
+      "title": "Key Activities",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "Forms\nF09-003A – Pre-Startup Safety Review (PSSR) Form (Maximo app)\nF09-003A – Pre-Startup Safety Review (PSSR) Form (Maximo app)\nRecordkeeping\nF09-003 – Pre Startup Safety Review (PSSR) Form\n(paper)\nF09-003 – Pre Startup Safety Review (PSSR) Form\n(paper)\nRecordkeeping",
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "training--operator-qualification-(oq)-requirements",
+      "title": "Training & Operator Qualification (OQ) Requirements",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "Training Requirements",
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "1.-execute-pssr",
+      "title": "1. Execute PSSR",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "PSSR Originator\n:\nCREATE\nthe PSSR record in Maximo and determine applicable Pre- and Post-Startup actions.\nIf using the F09-003 (paper) for subsequent PSSRs (instead of F09-003A (Maximo)):\nRefer to\nManagement of Change (MOC) and Pre-Startup Safety Review (PSSR) Task Guidance\nfor additional detail and resources for each line item and deliverable, including:\nPSSR Originator;\nPSSR Coordinator\n;\nProject Manager\n:\nASSIGN\nall required Pre- and Post-Startup actions to individuals qualified to complete the tasks.\nDue dates for Post-Startup actions will be automatically assigned on F09-003A (Maximo app) once PSSR is placed in service.\nIf using paper F09-003 (paper)\nIf Post-Startup action due dates need extended:\nRefer to\n12.02.00.06 – Action Item Management\n.\nPSSR Action Assignees\n:\nCOMPLETE\nassigned Pre-Startup actions.\nATTACH\nor\nLINK\nto relevant documentation verifying completion of the task, as applicable.\nManager, Operations:\nREVIEW\nthe completeness of the PSSR, including:\nSupporting documentation\nValidation, identification, and assignment of Post-Startup action items\nVERIFY\nthat training roster or communication is completed and attached to the PSSR.\nMay use\nF01-103 – Training and Communication Verification for SSPs, Emergency and Response Plans and MOC-PSSR Training\nto document that affected employees and contractors have been informed or trained.\nThe roster or communication should identify all Employees informed or trained on the process, change, or startup.\nAPPROVE\nor\nREJECT\nthe PSSR.\nPSSR Action Assignees:\nCOMPLETE\nassigned Post-Start actions.\nATTACH\nor\nLINK\nto relevant documentation verifying completion of the task, as applicable.\nPSSR Coordinator; Project Manager:\nVERIFY\nthat all Post-Startup actions are completed:\nATTACH\nall completion documentation to the PSSR record\nIf using the F09-003 (paper):\nCLOSE\nthe PSSR.",
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "section_id": "regulations--industry-standards",
+      "title": "Regulations & Industry Standards",
+      "status": "ADDED",
+      "original_content": null,
+      "new_content": "OSHA 29 CFR 1910.119 (i)\nEPA 40 CFR 68.77",
+      "similarity": null,
+      "diff_lines": []
+    }
+  ],
+  "warnings_result": {
+    "field": "warnings",
+    "status": "MATCH",
+    "original_value": [],
+    "new_value": [],
+    "similarity": 1.0,
+    "diff_lines": []
+  },
+  "summary": {
+    "MATCH": 8,
+    "MISMATCH": 1,
+    "MISSING": 3,
+    "ADDED": 6
+  },
+  "report_id": "406551790fa942daa6c534f637fef347",
+  "compare_mode": "doc_vs_html",
+  "original_parsed": {
+    "document_id": "80dd4c9650994d9f88ea56b5f5f665b7",
+    "title": "REVIEW Site-Specific Procedures",
+    "version": "00",
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": null,
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "tbl1",
+        "title": "Table",
+        "content": "REVIEW Site-Specific Procedures\n01.06.00.01-01 | Revision 00 | Effective Date\nAssociated Words\nForms | F01-101 – Review and Certification of SSOPs, SSMPs, and Emergency Plans",
+        "order": 1,
+        "subsections": []
+      },
+      {
+        "section_id": "s2",
+        "title": "Site-Specific Procedure Reviews",
+        "content": "Task: JP01060001-01 | OQ: N/A\nSupervisor, Operations:\n | IDENTIFY the SSOPs and SSMPs to review.\n | Use F01-101 to DOCUMENT: \nFacility, City, State\nType of review (check the appropriate boxes)\nProcedures to be reviewed\nNOTE: Use one form each year to document the procedure reviews, even if the reviews happen at various times throughout the year.\n | ASSIGN individuals to perform reviews of procedures.\nMake sure reviewers are familiar with the assets, equipment, and processes.\nReviewer:\n | During the review, VERIFY procedure content includes:\nAccurate steps and information, in the correct order\nCorrect Responsible Parties for each step/process\nRequired Qualifications (OQ, QE, etc.), if applicable\nLinks that open the appropriate document or location\nAll required sections of the appropriate template\n | REVISE procedures and forms, as necessary, per 01.06.00.01-03 – Create New, Revise Existing, or Archive Site-Specific Procedures.\nNOTE: Do not update the Revision History table unless changes are made to a procedure.\nSupervisor, Operations:\n | For each procedure reviewed, COMPLETE the F01-101:\nReviewed by\nDate\nRevisions Required?\nManager, Operations:\n | REVIEW and CERTIFY the F01-101:\nCertified by\nTitle\nDate\nNOTE: A physical signature is not required in the Certified By field.\n | UPLOAD the F01-101 to the Operations Repository.\nCompliance Requirements | 01.06.10.01 – GAS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.20.01 – LIQUIDS Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.30.01 – PSM-RMP Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.40.01 – OFFSHORE Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\n01.06.60.01 – LNG Procedure Manual for Operations & Maintenance - SSOPs, SSMPs\nDefinitions | WIMS Glossary\nRecordkeeping | WIMS Forms Matrix",
+        "order": 2,
+        "subsections": []
+      },
+      {
+        "section_id": "s3",
+        "title": "Applicability",
+        "content": "Franchise Applicability\nTransmission & GoM | Gathering & Processing\nGulf of Mexico | Laurel Mountain MS | Piceance | Anadarko/Mid-Continent\nEastern Interstates | ORSH Gathering | Southwest Wyoming | Barnett\nNorthwest Pipeline | ORSH Processing & Frac | Wamsutter | Eagle Ford\nMountainWest | SRSH Compression | Rocky Mountain MS | Haynesville\nLNG | SRSH Gathering | NGL Services | Permian\nUNGS | \nCorporate",
+        "order": 3,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [],
+    "revisions": [],
+    "metadata": {
+      "source_file": "80dd4c9650994d9f88ea56b5f5f665b7.docx",
+      "file_type": "docx",
+      "parsed_at": "2026-05-05T15:50:48.323079Z",
+      "page_count": null,
+      "word_count": 365
+    }
+  },
+  "new_parsed": {
+    "document_id": "CREW_pssr.html",
+    "title": "Pre-Startup Safety Review (PSSR)",
+    "version": "00",
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": "Establish the requirements for performing and documenting Pre-Startup Safety Reviews (PSSRs).\nA PSSR will confirm, at a minimum, that:\nConstruction and modifications are performed in accordance with design specifications and meet the requirements specified by the associated Management of Change (MOC), if applicable.\nRecommendations from a Process Hazard Analysis (PHA) or Hazard Screening Review (HSR) are resolved or implemented.\nEquipment and assets are inspected, tested, calibrated, etc., in accordance with design specifications.\nAffected employees are notified or trained.\nThe asset is ready for commissioning and startup.\nPost startup deliverables are identified and assigned.\nA PSSR is required:\nIn conjunction with every MOC.\nPrior to startup of any new asset.\nPrior to startup of an existing asset has been\nout of service\nfor any length of time.\nPrior to startup of an existing asset has been in\nstandby\nfor 12 or more months.\nBefore returning existing assets to service when removed from",
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "purpose",
+        "title": "Purpose",
+        "content": "Establish the requirements for performing and documenting Pre-Startup Safety Reviews (PSSRs).\nA PSSR will confirm, at a minimum, that:\nConstruction and modifications are performed in accordance with design specifications and meet the requirements specified by the associated Management of Change (MOC), if applicable.\nRecommendations from a Process Hazard Analysis (PHA) or Hazard Screening Review (HSR) are resolved or implemented.\nEquipment and assets are inspected, tested, calibrated, etc., in accordance with design specifications.\nAffected employees are notified or trained.\nThe asset is ready for commissioning and startup.\nPost startup deliverables are identified and assigned.\nA PSSR is required:\nIn conjunction with every MOC.\nPrior to startup of any new asset.\nPrior to startup of an existing asset has been\nout of service\nfor any length of time.\nPrior to startup of an existing asset has been in\nstandby\nfor 12 or more months.\nBefore returning existing assets to service when removed from service for:\nNon-routine repairs\nSignificant maintenance\nOtherwise disassembled (e.g., cavern workover, compressor overhaul, equipment, piping, vessels etc. which were opened or disassembled for inspection etc.)\nA PSSR may be required even if an MOC is not.\nFor additional guidance on effectively executing the PSSR process for large-scale projects or for phased startup of complex projects or jobs, see\nMOC Guidance\n.\nApplies to\n: All Company Facilities",
+        "order": 1,
+        "subsections": []
+      },
+      {
+        "section_id": "key-activities",
+        "title": "Key Activities",
+        "content": "Forms\nF09-003A – Pre-Startup Safety Review (PSSR) Form (Maximo app)\nF09-003A – Pre-Startup Safety Review (PSSR) Form (Maximo app)\nRecordkeeping\nF09-003 – Pre Startup Safety Review (PSSR) Form\n(paper)\nF09-003 – Pre Startup Safety Review (PSSR) Form\n(paper)\nRecordkeeping",
+        "order": 2,
+        "subsections": []
+      },
+      {
+        "section_id": "training--operator-qualification-(oq)-requirements",
+        "title": "Training & Operator Qualification (OQ) Requirements",
+        "content": "Training Requirements",
+        "order": 3,
+        "subsections": []
+      },
+      {
+        "section_id": "1.-execute-pssr",
+        "title": "1. Execute PSSR",
+        "content": "PSSR Originator\n:\nCREATE\nthe PSSR record in Maximo and determine applicable Pre- and Post-Startup actions.\nIf using the F09-003 (paper) for subsequent PSSRs (instead of F09-003A (Maximo)):\nRefer to\nManagement of Change (MOC) and Pre-Startup Safety Review (PSSR) Task Guidance\nfor additional detail and resources for each line item and deliverable, including:\nPSSR Originator;\nPSSR Coordinator\n;\nProject Manager\n:\nASSIGN\nall required Pre- and Post-Startup actions to individuals qualified to complete the tasks.\nDue dates for Post-Startup actions will be automatically assigned on F09-003A (Maximo app) once PSSR is placed in service.\nIf using paper F09-003 (paper)\nIf Post-Startup action due dates need extended:\nRefer to\n12.02.00.06 – Action Item Management\n.\nPSSR Action Assignees\n:\nCOMPLETE\nassigned Pre-Startup actions.\nATTACH\nor\nLINK\nto relevant documentation verifying completion of the task, as applicable.\nManager, Operations:\nREVIEW\nthe completeness of the PSSR, including:\nSupporting documentation\nValidation, identification, and assignment of Post-Startup action items\nVERIFY\nthat training roster or communication is completed and attached to the PSSR.\nMay use\nF01-103 – Training and Communication Verification for SSPs, Emergency and Response Plans and MOC-PSSR Training\nto document that affected employees and contractors have been informed or trained.\nThe roster or communication should identify all Employees informed or trained on the process, change, or startup.\nAPPROVE\nor\nREJECT\nthe PSSR.\nPSSR Action Assignees:\nCOMPLETE\nassigned Post-Start actions.\nATTACH\nor\nLINK\nto relevant documentation verifying completion of the task, as applicable.\nPSSR Coordinator; Project Manager:\nVERIFY\nthat all Post-Startup actions are completed:\nATTACH\nall completion documentation to the PSSR record\nIf using the F09-003 (paper):\nCLOSE\nthe PSSR.",
+        "order": 4,
+        "subsections": []
+      },
+      {
+        "section_id": "regulations--industry-standards",
+        "title": "Regulations & Industry Standards",
+        "content": "OSHA 29 CFR 1910.119 (i)\nEPA 40 CFR 68.77",
+        "order": 5,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [
+      "out of service (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Glossary/AllItems.aspx?FilterField1=LinkTitle&FilterValue1=Out%20of%20Service%20%28PSSR%29&FilterType1=Computed&FilterOp1=In&viewid=4e64f067%2D8507%2D48d6%2D9cfa%2De4edabd79c19)",
+      "standby (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Glossary/AllItems.aspx?FilterField1=LinkTitle&FilterValue1=Standby%20%28PSSR%29&FilterType1=Computed&FilterOp1=In&viewid=4e64f067%2D8507%2D48d6%2D9cfa%2De4edabd79c19)",
+      "MOC Guidance (https://williams365.sharepoint.com/sites/Pub_MyWIMS/_layouts/15/docidredir.aspx?id=6DASDKMHUZR5-2057227859-14400)",
+      "F09-003 – Pre Startup Safety Review (PSSR) Form (https://williams365.sharepoint.com/sites/pub_mywims/_layouts/15/DocIdRedir.aspx?ID=6DASDKMHUZR5-2057227859-17788)",
+      "Recordkeeping (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Forms%20Matrix/DispForm.aspx?ID=294&e=WWYo8g)",
+      "Training Requirements (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Training%20Requirements/AllItems.aspx?FilterField1=OperatingRequirement&FilterValue1=09%2E00%2E00%2E02%20%E2%80%93%20Pre%2DStartup%20Safety%20Review%20%28PSSR%29&FilterType1=Lookup&viewid=40977707%2D0536%2D4a05%2D962d%2D5409cdd637dc&npsAction=createList)",
+      "PSSR Originator (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Role%20Descriptions/AllItems.aspx?FilterField1=OperatingRequirement&FilterValue1=09%2E00%2E00%2E02%20%E2%80%93%20Pre%2DStartup%20Safety%20Review%20%28PSSR%29&FilterType1=Lookup&FilterOp1=In&FilterField2=LinkTitle&FilterValue2=PSSR%20Originator&FilterType2=Computed&FilterOp2=In&viewid=ec57649e%2D1497%2D4824%2Dbc87%2Deb14e0fba6c9)",
+      "Management of Change (MOC) and Pre-Startup Safety Review (PSSR) Task Guidance (https://williams365.sharepoint.com/sites/Pub_MyWIMS/_layouts/15/docidredir.aspx?id=6DASDKMHUZR5-2057227859-19427)",
+      "PSSR Coordinator (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Role%20Descriptions/AllItems.aspx?FilterField1=OperatingRequirement&FilterValue1=09%2E00%2E00%2E02%20%E2%80%93%20Pre%2DStartup%20Safety%20Review%20%28PSSR%29&FilterType1=Lookup&FilterOp1=In&FilterField2=LinkTitle&FilterValue2=PSSR%20Coordinator&FilterType2=Computed&FilterOp2=In&viewid=ec57649e%2D1497%2D4824%2Dbc87%2Deb14e0fba6c9)",
+      "Project Manager (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Role%20Descriptions/AllItems.aspx?FilterField1=OperatingRequirement&FilterValue1=09%2E00%2E00%2E02%20%E2%80%93%20Pre%2DStartup%20Safety%20Review%20%28PSSR%29&FilterType1=Lookup&FilterOp1=In&FilterField2=LinkTitle&FilterValue2=Project%20Manager&FilterType2=Computed&FilterOp2=In&viewid=ec57649e%2D1497%2D4824%2Dbc87%2Deb14e0fba6c9)",
+      "12.02.00.06 – Action Item Management (https://williams365.sharepoint.com/sites/Pub_MyWIMS/_layouts/15/DocIdRedir.aspx?ID=6DASDKMHUZR5-2057227859-18416)",
+      "PSSR Action Assignees (https://williams365.sharepoint.com/sites/TEST-CRVR/Lists/WIMS%20Role%20Descriptions/AllItems.aspx?FilterField1=OperatingRequirement&FilterValue1=09%2E00%2E00%2E02%20%E2%80%93%20Pre%2DStartup%20Safety%20Review%20%28PSSR%29&FilterType1=Lookup&FilterOp1=In&FilterField2=LinkTitle&FilterValue2=PSSR%20Action%20Assignees%3A&FilterType2=Computed&FilterOp2=In&viewid=ec57649e%2D1497%2D4824%2Dbc87%2Deb14e0fba6c9)",
+      "F01-103 – Training and Communication Verification for SSPs, Emergency and Response Plans and MOC-PSSR Training (https://williams365.sharepoint.com/sites/Pub_MyWIMS/_layouts/15/DocIdRedir.aspx?ID=6DASDKMHUZR5-2057227859-17344)"
+    ],
+    "revisions": [],
+    "metadata": {
+      "source_file": "CREW_pssr.html",
+      "file_type": "webpage",
+      "parsed_at": "2026-05-05T15:50:49.350079Z",
+      "page_count": null,
+      "word_count": 533,
+      "scoped_to": "div.crew-rendered-content"
+    }
+  }
+}

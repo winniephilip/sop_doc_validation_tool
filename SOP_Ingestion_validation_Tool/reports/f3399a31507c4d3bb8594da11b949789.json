@@ -1,0 +1,237 @@
+{
+  "original_file": "7a2d68364de64cb8b966d743fea55a81.pdf",
+  "new_file": "fb620bb34d4a4ad6a3e8ba436498a9be.pdf",
+  "overall_status": "MATCH",
+  "score": 1.0,
+  "field_results": [
+    {
+      "field": "title",
+      "status": "MATCH",
+      "original_value": "Standard Operating Procedure (SOP)",
+      "new_value": "Standard Operating Procedure (SOP)",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "field": "version",
+      "status": "MATCH",
+      "original_value": "1.0",
+      "new_value": "1.0",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "field": "revision_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "effective_date",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "department",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "author",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "approver",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "purpose",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    },
+    {
+      "field": "scope",
+      "status": "MATCH",
+      "original_value": null,
+      "new_value": null,
+      "similarity": null,
+      "diff_lines": []
+    }
+  ],
+  "section_results": [
+    {
+      "section_id": "1",
+      "title": "Upload PDF document Developer",
+      "status": "MATCH",
+      "original_content": "",
+      "new_content": "",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "section_id": "2",
+      "title": "Run PDF to Markdown converter System",
+      "status": "MATCH",
+      "original_content": "",
+      "new_content": "",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "section_id": "3",
+      "title": "Review extracted Markdown QA Engineer",
+      "status": "MATCH",
+      "original_content": "",
+      "new_content": "",
+      "similarity": 1.0,
+      "diff_lines": []
+    },
+    {
+      "section_id": "4",
+      "title": "Log defects and improvements Team",
+      "status": "MATCH",
+      "original_content": "5. Reference Diagram\nThe following diagram represents a high-level document conversion workflow:\n6. Notes and Assumptions\n(cid:127) The PDF contains both textual and non-textual elements\n(cid:127) Images should be extracted or referenced correctly\n(cid:127) Tables should retain row and column structure\n(cid:127) Headings must be preserved as Markdown headers",
+      "new_content": "5. Reference Diagram\nThe following diagram represents a high-level document conversion workflow:\n6. Notes and Assumptions\n(cid:127) The PDF contains both textual and non-textual elements\n(cid:127) Images should be extracted or referenced correctly\n(cid:127) Tables should retain row and column structure\n(cid:127) Headings must be preserved as Markdown headers",
+      "similarity": 1.0,
+      "diff_lines": []
+    }
+  ],
+  "warnings_result": {
+    "field": "warnings",
+    "status": "MATCH",
+    "original_value": [],
+    "new_value": [],
+    "similarity": 1.0,
+    "diff_lines": []
+  },
+  "summary": {
+    "MATCH": 14,
+    "MISMATCH": 0,
+    "MISSING": 0,
+    "ADDED": 0
+  },
+  "report_id": "f3399a31507c4d3bb8594da11b949789",
+  "original_parsed": {
+    "document_id": "document",
+    "title": "Standard Operating Procedure (SOP)",
+    "version": "1.0",
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": null,
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "1",
+        "title": "Upload PDF document Developer",
+        "content": "",
+        "order": 1,
+        "subsections": []
+      },
+      {
+        "section_id": "2",
+        "title": "Run PDF to Markdown converter System",
+        "content": "",
+        "order": 2,
+        "subsections": []
+      },
+      {
+        "section_id": "3",
+        "title": "Review extracted Markdown QA Engineer",
+        "content": "",
+        "order": 3,
+        "subsections": []
+      },
+      {
+        "section_id": "4",
+        "title": "Log defects and improvements Team",
+        "content": "5. Reference Diagram\nThe following diagram represents a high-level document conversion workflow:\n6. Notes and Assumptions\n(cid:127) The PDF contains both textual and non-textual elements\n(cid:127) Images should be extracted or referenced correctly\n(cid:127) Tables should retain row and column structure\n(cid:127) Headings must be preserved as Markdown headers",
+        "order": 4,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [],
+    "revisions": [],
+    "metadata": {
+      "source_file": "7a2d68364de64cb8b966d743fea55a81.pdf",
+      "file_type": "pdf",
+      "parsed_at": "2026-05-01T17:22:32.324304Z",
+      "page_count": 2,
+      "word_count": 151
+    }
+  },
+  "new_parsed": {
+    "document_id": "document",
+    "title": "Standard Operating Procedure (SOP)",
+    "version": "1.0",
+    "revision_date": null,
+    "effective_date": null,
+    "department": null,
+    "author": null,
+    "approver": null,
+    "purpose": null,
+    "scope": null,
+    "sections": [
+      {
+        "section_id": "1",
+        "title": "Upload PDF document Developer",
+        "content": "",
+        "order": 1,
+        "subsections": []
+      },
+      {
+        "section_id": "2",
+        "title": "Run PDF to Markdown converter System",
+        "content": "",
+        "order": 2,
+        "subsections": []
+      },
+      {
+        "section_id": "3",
+        "title": "Review extracted Markdown QA Engineer",
+        "content": "",
+        "order": 3,
+        "subsections": []
+      },
+      {
+        "section_id": "4",
+        "title": "Log defects and improvements Team",
+        "content": "5. Reference Diagram\nThe following diagram represents a high-level document conversion workflow:\n6. Notes and Assumptions\n(cid:127) The PDF contains both textual and non-textual elements\n(cid:127) Images should be extracted or referenced correctly\n(cid:127) Tables should retain row and column structure\n(cid:127) Headings must be preserved as Markdown headers",
+        "order": 4,
+        "subsections": []
+      }
+    ],
+    "warnings": [],
+    "references": [],
+    "revisions": [],
+    "metadata": {
+      "source_file": "fb620bb34d4a4ad6a3e8ba436498a9be.pdf",
+      "file_type": "pdf",
+      "parsed_at": "2026-05-01T17:22:32.354400Z",
+      "page_count": 2,
+      "word_count": 151
+    }
+  }
+}
