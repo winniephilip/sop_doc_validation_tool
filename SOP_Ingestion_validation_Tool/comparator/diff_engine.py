@@ -147,27 +147,23 @@ class DiffEngine:
         matched_orig: set[str] = set()   # tracks section_ids already paired
         matched_new:  set[str] = set()
 
-        # ── pass 0: order-position pre-matching ──────────────────────────────
-        # Pair sections that share the same `order` value with a very low
-        # similarity floor (0.05). This deterministically locks structural
-        # pairs — e.g. tbl1 (order=1) ↔ crew-header (order=1) — before
-        # title matching can scatter them. Using section_id as key avoids
-        # the dict-key collision that occurs with duplicate titles like "Table".
+        # ── pass 0: structural header pre-matching (tbl1 ↔ crew-header only) ──
+        # The DOCX first-table header (section_id="tbl1") must be paired with
+        # the HTML crew-header section (section_id="crew-header") regardless of
+        # content similarity, because tbl1 is often near-empty while crew-header
+        # has rich text. A very low floor (0.05) is used so even sparse content
+        # still forms the pair. All other sections use title matching below.
         ORDER_SIM_FLOOR = 0.05
-        orig_by_order = {s["order"]: s for s in orig_sections}
-        new_by_order  = {s["order"]: s for s in new_sections}
-        for order_val in sorted(set(orig_by_order) & set(new_by_order)):
-            o = orig_by_order[order_val]
-            n = new_by_order[order_val]
-            if o["section_id"] in matched_orig or n["section_id"] in matched_new:
-                continue
-            sim = self._similarity(o["content"], n["content"])
+        tbl1       = next((s for s in orig_sections if s["section_id"] == "tbl1"), None)
+        crew_hdr   = next((s for s in new_sections  if s["section_id"] == "crew-header"), None)
+        if tbl1 and crew_hdr:
+            sim = self._similarity(tbl1["content"], crew_hdr["content"])
             if sim >= ORDER_SIM_FLOOR:
-                matched_orig.add(o["section_id"])
-                matched_new.add(n["section_id"])
+                matched_orig.add("tbl1")
+                matched_new.add("crew-header")
                 st: Status = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
-                diff = self._inline_diff(o["content"], n["content"]) if st == "MISMATCH" else []
-                results.append(SectionResult(o["section_id"], o["title"], st, o["content"], n["content"], sim, diff))
+                diff = self._inline_diff(tbl1["content"], crew_hdr["content"]) if st == "MISMATCH" else []
+                results.append(SectionResult(tbl1["section_id"], tbl1["title"], st, tbl1["content"], crew_hdr["content"], sim, diff))
 
         # ── pass 1: title-key matches ─────────────────────────────────────────
         # Group by normalised title using lists (not dicts) so duplicate titles
