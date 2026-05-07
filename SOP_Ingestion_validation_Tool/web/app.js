@@ -441,12 +441,25 @@ function renderSections(sections, mode) {
       origHtml = esc(s.original_content || "(not present)");
       newHtml  = esc(s.new_content      || "(not present)");
     }
+    var scoreRow = "";
+    if (s.similarity != null) {
+      var pct   = Math.round(s.similarity * 100);
+      var col   = s.similarity >= 0.8 ? "#22543d" : s.similarity >= 0.5 ? "#744210" : "#742a2a";
+      var fill  = s.similarity >= 0.8 ? "fill-high" : s.similarity >= 0.5 ? "fill-medium" : "fill-low";
+      scoreRow  = '<div class="section-score-row">' +
+        '<span style="color:#718096;font-weight:600;font-size:.78rem">Match Score</span>' +
+        '<span class="section-score-pct" style="color:' + col + '">' + pct + '%</span>' +
+        '<div class="section-score-bar sim-bar-wrap">' +
+          '<div class="sim-bar"><div class="sim-fill ' + fill + '" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+      '</div>';
+    }
     return '<div class="section-card">' +
       '<div class="section-header" onclick="toggleSection(this)">' +
         '<span class="status-badge status-' + s.status + '">' + s.status + '</span>' +
         '<span class="section-title">' + esc(s.title) + '</span>' + sim +
         '<span>&#9660;</span></div>' +
-      '<div class="section-body"><div class="section-split">' +
+      '<div class="section-body">' + scoreRow + '<div class="section-split">' +
         '<div class="section-col"><h4>' + leftLbl  + '</h4><p>' + origHtml + '</p></div>' +
         '<div class="section-col"><h4>' + rightLbl + '</h4><p>' + newHtml  + '</p></div>' +
       '</div></div>';
@@ -486,7 +499,7 @@ function simBar(ratio) {
   var pct  = Math.round(ratio * 100);
   var fill = ratio >= 0.8 ? "fill-high" : ratio >= 0.5 ? "fill-medium" : "fill-low";
   return '<div class="sim-bar-wrap"><div class="sim-bar"><div class="sim-fill ' + fill + '" style="width:' + pct + '%"></div></div>' +
-    '<span style="font-size:.75rem;color:#718096">' + pct + '%</span></div>';
+    '<span style="font-size:.82rem;font-weight:700;color:#2d3748;min-width:36px">' + pct + '%</span></div>';
 }
 
 console.log("[SOP Tool] app.js v4 loaded");

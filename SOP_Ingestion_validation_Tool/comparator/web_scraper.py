@@ -35,7 +35,7 @@ def html_to_sop(html: str, source_url: str = "") -> dict[str, Any]:
     raw_text = " ".join(s["content"] for s in sections)
 
     return {
-        "document_id":    source_url,
+        "document_id":    meta.get("document_id") or source_url,
         "title":          title,
         "version":        meta.get("version"),
         "revision_date":  meta.get("revision_date"),
@@ -79,8 +79,21 @@ def _page_title(soup: BeautifulSoup, root: Any) -> str:
 
 def _meta_fields(root: Any) -> dict[str, str | None]:
     """Scan the scoped root for version, author, date, etc."""
-    full_text = root.get_text(separator="\n")
     result: dict[str, str | None] = {}
+
+    # CREW-specific: structured extraction from crew-header-meta spans
+    meta_div = root.find("div", class_="crew-header-meta")
+    if meta_div:
+        spans = [s.get_text(strip=True) for s in meta_div.find_all("span") if s.get_text(strip=True)]
+        if spans:
+            result["document_id"] = spans[0]   # e.g. "01.06.00.01-01g"
+        if len(spans) > 1:
+            rev_m = re.search(r"(?:revision|rev)[:\s]+([0-9]+(?:\.[0-9]+)*)", spans[1], re.I)
+            if rev_m:
+                result["version"] = rev_m.group(1)
+
+    # Regex fallback on full body text (does not overwrite CREW-specific values)
+    full_text = root.get_text(separator="\n")
     patterns = {
         "version":       re.compile(r"(?:version|rev(?:ision)?)[:\s]+([0-9]+(?:\.[0-9]+)*)", re.I),
         "revision_date": re.compile(r"(?:revision|effective|date)[:\s]+([0-3]?\d[/\-\.][0-1]?\d[/\-\.][0-9]{2,4})", re.I),
@@ -89,8 +102,9 @@ def _meta_fields(root: Any) -> dict[str, str | None]:
         "department":    re.compile(r"(?:department|dept)[:\s]+([^\n\r]{2,80})", re.I),
     }
     for key, pat in patterns.items():
-        m = pat.search(full_text)
-        result[key] = m.group(1).strip() if m else None
+        if key not in result:
+            m = pat.search(full_text)
+            result[key] = m.group(1).strip() if m else None
     return result
 
 
@@ -124,14 +138,57 @@ def _extract_sections(root: Any) -> list[dict[str, Any]]:
     return _extract_sections_standard(root)
 
 
+def _extract_crew_header(card: Tag) -> dict[str, Any] | None:
+    """Build a comparable section from div.crew-header-card content."""
+    parts: list[str] = []
+
+    logo = card.find("div", class_="crew-header-logo")
+    if logo:
+        txt = logo.get_text(strip=True)
+        if txt:
+            parts.append(txt)
+
+    title_div = card.find("div", class_="crew-header-title")
+    if title_div:
+        txt = title_div.get_text(strip=True)
+        if txt:
+            parts.append(txt)
+
+    meta = card.find("div", class_="crew-header-meta")
+    if meta:
+        for span in meta.find_all("span"):
+            txt = span.get_text(strip=True)
+            if txt:
+                parts.append(txt)
+
+    if not parts:
+        return None
+
+    return {
+        "section_id":  "crew-header",
+        "title":       "Header",
+        "content":     "\n".join(parts),
+        "order":       0,
+        "subsections": [],
+    }
+
+
 def _extract_sections_crew(container: Any) -> list[dict[str, Any]]:
     """Walk direct children of a crew-document div."""
-    SKIP_CLASSES = {"crew-header-card"}   # logo / title banner — not content
-    SKIP_TAGS    = {"style", "script"}
+    SKIP_TAGS = {"style", "script"}
 
     sections: list[dict[str, Any]] = []
     order = 0
     current: dict[str, Any] | None = None
+
+    # Extract header card as the first section before the main walk
+    header_card = container.find("div", class_="crew-header-card")
+    if header_card:
+        header_sec = _extract_crew_header(header_card)
+        if header_sec:
+            order += 1
+            header_sec["order"] = order
+            sections.append(header_sec)
 
     def flush():
         nonlocal current, order
@@ -149,8 +206,8 @@ def _extract_sections_crew(container: Any) -> list[dict[str, Any]]:
         tag = child.name.lower()
         classes = set(child.get("class") or [])
 
-        if tag in SKIP_TAGS or classes & SKIP_CLASSES:
-            continue
+        if tag in SKIP_TAGS or "crew-header-card" in classes:
+            continue  # header already extracted above
 
         if _is_section_heading(child):
             flush()
