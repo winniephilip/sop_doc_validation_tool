@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import difflib
 import re
+from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
@@ -142,32 +143,64 @@ class DiffEngine:
     def _compare_sections(
         self, orig_sections: list[dict], new_sections: list[dict]
     ) -> list[SectionResult]:
-        orig_map = {self._norm_title(s["title"]): s for s in orig_sections}
-        new_map  = {self._norm_title(s["title"]): s for s in new_sections}
+        results:      list[SectionResult] = []
+        matched_orig: set[str] = set()   # tracks section_ids already paired
+        matched_new:  set[str] = set()
 
-        results:       list[SectionResult] = []
-        matched_orig:  set[str] = set()
-        matched_new:   set[str] = set()
+        # ── pass 0: order-position pre-matching ──────────────────────────────
+        # Pair sections that share the same `order` value with a very low
+        # similarity floor (0.05). This deterministically locks structural
+        # pairs — e.g. tbl1 (order=1) ↔ crew-header (order=1) — before
+        # title matching can scatter them. Using section_id as key avoids
+        # the dict-key collision that occurs with duplicate titles like "Table".
+        ORDER_SIM_FLOOR = 0.05
+        orig_by_order = {s["order"]: s for s in orig_sections}
+        new_by_order  = {s["order"]: s for s in new_sections}
+        for order_val in sorted(set(orig_by_order) & set(new_by_order)):
+            o = orig_by_order[order_val]
+            n = new_by_order[order_val]
+            if o["section_id"] in matched_orig or n["section_id"] in matched_new:
+                continue
+            sim = self._similarity(o["content"], n["content"])
+            if sim >= ORDER_SIM_FLOOR:
+                matched_orig.add(o["section_id"])
+                matched_new.add(n["section_id"])
+                st: Status = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
+                diff = self._inline_diff(o["content"], n["content"]) if st == "MISMATCH" else []
+                results.append(SectionResult(o["section_id"], o["title"], st, o["content"], n["content"], sim, diff))
 
         # ── pass 1: title-key matches ─────────────────────────────────────────
-        for key in dict.fromkeys(list(orig_map) + list(new_map)):
-            o = orig_map.get(key)
-            n = new_map.get(key)
-            if o and n:
-                matched_orig.add(key)
-                matched_new.add(key)
+        # Group by normalised title using lists (not dicts) so duplicate titles
+        # — e.g. two "Table" sections — are all preserved and paired positionally.
+        orig_by_title: dict[str, list[dict]] = defaultdict(list)
+        new_by_title:  dict[str, list[dict]] = defaultdict(list)
+        for s in orig_sections:
+            if s["section_id"] not in matched_orig:
+                orig_by_title[self._norm_title(s["title"])].append(s)
+        for s in new_sections:
+            if s["section_id"] not in matched_new:
+                new_by_title[self._norm_title(s["title"])].append(s)
+
+        for key in dict.fromkeys(list(orig_by_title) + list(new_by_title)):
+            o_list = orig_by_title.get(key, [])
+            n_list = new_by_title.get(key, [])
+            for o, n in zip(o_list, n_list):
+                if o["section_id"] in matched_orig or n["section_id"] in matched_new:
+                    continue
+                matched_orig.add(o["section_id"])
+                matched_new.add(n["section_id"])
                 o_c = o["content"]
                 n_c = n["content"]
                 sim = self._similarity(o_c, n_c)
-                status: Status = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
-                diff = self._inline_diff(o_c, n_c) if status == "MISMATCH" else []
-                results.append(SectionResult(o["section_id"], o["title"], status, o_c, n_c, sim, diff))
+                st = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
+                diff = self._inline_diff(o_c, n_c) if st == "MISMATCH" else []
+                results.append(SectionResult(o["section_id"], o["title"], st, o_c, n_c, sim, diff))
 
-        unmatched_orig = [s for k, s in orig_map.items() if k not in matched_orig]
-        unmatched_new  = [s for k, s in new_map.items()  if k not in matched_new]
+        unmatched_orig = [s for s in orig_sections if s["section_id"] not in matched_orig]
+        unmatched_new  = [s for s in new_sections  if s["section_id"] not in matched_new]
 
         # ── pass 2: content-similarity fallback for title-mismatched sections ─
-        CONTENT_MATCH_THRESHOLD = 0.40   # low threshold — titles differ, content should align
+        CONTENT_MATCH_THRESHOLD = 0.40
         pairs: list[tuple[float, dict, dict]] = []
         for o in unmatched_orig:
             for n in unmatched_new:
@@ -184,9 +217,9 @@ class DiffEngine:
                 continue
             used_orig.add(o["section_id"])
             used_new.add(n["section_id"])
-            status = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
-            diff = self._inline_diff(o["content"], n["content"]) if status == "MISMATCH" else []
-            results.append(SectionResult(o["section_id"], o["title"], status, o["content"], n["content"], sim, diff))
+            st = "MATCH" if sim >= TEXT_THRESHOLD else "MISMATCH"
+            diff = self._inline_diff(o["content"], n["content"]) if st == "MISMATCH" else []
+            results.append(SectionResult(o["section_id"], o["title"], st, o["content"], n["content"], sim, diff))
 
         # ── pass 3: remaining unmatched → MISSING / ADDED ─────────────────────
         for o in unmatched_orig:
